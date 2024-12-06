@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EFR × RIFE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-gradient-from: #ffffff;
+            --bg-gradient-to: #f5f5f5;
+            --text-color: #333;
+            --hover-color: #F97794;
+            --page-background: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --underline-gradient: linear-gradient(90deg, #F97794, #623AA2);
+        }
+
+        [data-theme="dark"] {
+            --bg-gradient-from: #000000;
+            --bg-gradient-to: #000000;
+            --text-color: #fff;
+            --hover-color: #F97794;
+            --page-background: #000000;
+            --shadow-color: rgba(255, 255, 255, 0.4);
+            --underline-gradient: linear-gradient(90deg, #F97794, #00a8ff);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        nav {
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            box-shadow: 5px 4px 40px var(--shadow-color);
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            color: var(--text-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            margin-left: -20px;
+        }
+
+        .nav-links {
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 60px;
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--underline-gradient);
+            transition: width 0.3s ease;
+            transform-origin: left;
+        }
+
+        .nav-links a:hover {
+            color: var(--hover-color);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:not(:hover)::after {
+            width: 0;
+            left: auto;
+            right: 0;
+            transform-origin: right;
+        }
+
+        .theme-switch {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-switch:hover {
+            transform: scale(1.1);
+            background: none;
+            color: var(--hover-color);
+        }
+
+        body {
+            background-color: var(--page-background);
+            transition: background-color 0.3s ease;
+        }
+
+        .content-container {
+            margin-top: 100px;
+            padding: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .icon-section {
+            flex-shrink: 0;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            border-radius: 20px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            overflow: hidden;
+        }
+
+        .icon-image {
+            width: 80%;
+            height: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+            border-radius: 15px;
+        }
+
+        .icon-image:hover {
+            transform: scale(1.1);
+        }
+
+        .text-section {
+            flex-grow: 1;
+            padding: 20px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            border-radius: 20px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .text-section h1 {
+            color: var(--text-color);
+            margin-bottom: 10px;
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            font-size: 2.5rem;
+        }
+
+        .text-section h2 {
+            color: var(--text-color);
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            font-size: 1.5rem;
+            font-weight: normal;
+        }
+
+        .text-section p {
+            color: var(--text-color);
+            line-height: 1.6;
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+        }
+
+        .divider {
+            max-width: 1200px;
+            height: 2px;
+            margin: 40px auto;
+            background: var(--underline-gradient);
+            box-shadow: 0 2px 10px var(--shadow-color);
+            border-radius: 2px;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 30px;
+            justify-content: space-between;
+        }
+
+        .feature-box {
+            flex: 1;
+            padding: 30px;
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            border-radius: 20px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px var(--shadow-color);
+        }
+
+        .feature-box h3 {
+            color: var(--text-color);
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-box p {
+            color: var(--text-color);
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .ui-showcase {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .ui-showcase h2 {
+            color: var(--text-color);
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .ui-image-container {
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            overflow: hidden;
+        }
+
+        .ui-image {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .ui-image:hover {
+            transform: scale(1.02);
+        }
+
+        /* 添加说明文本框和对比框样式 */
+        .comparison-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .description-box {
+            max-width: 400px;
+            padding: 20px;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            border-radius: 15px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .description-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px var(--shadow-color);
+        }
+
+        .description-box h3 {
+            color: var(--text-color);
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .description-box p {
+            color: var(--text-color);
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .comparison-container {
+            display: flex;
+            gap: 30px;
+            justify-content: space-between;
+        }
+
+        .comparison-box {
+            flex: 1;
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .comparison-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 25px var(--shadow-color);
+        }
+
+        .comparison-box h4 {
+            color: var(--text-color);
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .comparison-image-container {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .comparison-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .comparison-image:hover {
+            transform: scale(1.02);
+        }
+
+        .features-container special-layout {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 30px;
+            justify-content: space-between;
+        }
+
+        .feature-box large-box {
+            flex: 2;
+            padding: 30px;
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            border-radius: 20px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-box medium-box {
+            flex: 1;
+            padding: 30px;
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            border-radius: 20px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .special-layout {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .special-layout .large-box {
+            flex: 3;
+        }
+
+        .special-layout .medium-box {
+            flex: 2;
+        }
+
+        .special-layout .feature-box {
+            margin: 0;
+            height: auto;
+            min-height: 200px;
+        }
+
+        @media (max-width: 768px) {
+            .special-layout {
+                flex-direction: column;
+            }
+        }
+
+        /* 在style标签内的最后添加下载区域的样式 */
+        .download-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .download-container {
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .download-title {
+            color: var(--text-color);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+        }
+
+        .version-info {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .download-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(90deg, #F97794, #623AA2);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+        }
+
+        .download-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(249, 119, 148, 0.4);
+        }
+
+        .download-info {
+            color: var(--text-color);
+            margin-top: 20px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+        }
+
+        /* 修改支持按钮样式，使用相同的渐变色 */
+        .support-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(90deg, #F97794, #623AA2);  /* 改为与下载按钮相同的渐变色 */
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+        }
+
+        .support-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(249, 119, 148, 0.4);  /* 改为与下载按钮相同的阴影颜色 */
+        }
+
+        /* 在style标签内添加版权信息的样式 */
+        .footer {
+            max-width: 1200px;
+            margin: 40px auto 20px;
+            padding: 20px;
+            text-align: center;
+            color: var(--text-color);
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+        }
+
+        .footer p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin: 5px 0;
+        }
+
+        .footer .team-name {
+            font-weight: bold;
+            color: var(--hover-color);
+        }
+
+        /* 在style标签内添加动画相关样式 */
+        @keyframes dropIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-drop {
+            opacity: 0;
+            animation: dropIn 0.8s ease forwards;
+        }
+
+        /* 为不同板块设置不同的动画延迟 */
+        .content-container {
+            animation-delay: 0.2s;
+        }
+
+        .features-container {
+            animation-delay: 0.4s;
+        }
+
+        .ui-showcase {
+            animation-delay: 0.6s;
+        }
+
+        .comparison-section {
+            animation-delay: 0.8s;
+        }
+
+        .download-section {
+            animation-delay: 1s;
+        }
+
+        .footer {
+            animation-delay: 1.2s;
+        }
+
+        /* 在现有样式的最后添加移动端适配 */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                padding: 0;
+                margin: 10px 0;
+                gap: 1rem;
+            }
+
+            .logo {
+                margin: 10px 0;
+            }
+
+            .content-container {
+                flex-direction: column;
+                margin-top: 150px;
+                padding: 10px;
+                gap: 20px;
+            }
+
+            .icon-section {
+                width: 100%;
+                max-width: 200px;
+                margin: 0 auto;
+            }
+
+            .text-section {
+                width: 100%;
+                height: auto;
+                padding: 15px;
+            }
+
+            .text-section h1 {
+                font-size: 2rem;
+            }
+
+            .text-section h2 {
+                font-size: 1.2rem;
+            }
+
+            .features-container {
+                flex-direction: column;
+                padding: 10px;
+                gap: 20px;
+            }
+
+            .feature-box {
+                padding: 20px;
+            }
+
+            .comparison-container {
+                flex-direction: column;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .download-button,
+            .support-button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .text-section h1 {
+                font-size: 1.8rem;
+            }
+
+            .feature-box h3 {
+                font-size: 1.2rem;
+            }
+
+            .download-title {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">EFR×RIFE</a>
+            <ul class="nav-links">
+                <li><a href="index.html">🛖 首页</a></li>
+                <li><a href="about.html">👥 关于我们</a></li>
+                <li><a href="about-efr.html">关于 × EFR</a></li>
+            </ul>
+            <button class="theme-switch">
+                <i class="fas fa-sun"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div class="content-container">
+        <div class="icon-section">
+            <img src="https://c-ssl.duitang.com/uploads/blog/202011/24/20201124113024_6650e.jpg" alt="EFR-RIFE Logo" class="icon-image">
+        </div>
+        <div class="text-section">
+            <h1>EFR×RIFE</h1>
+            <h2>Endless Frame rate</h2>
+        </div>
+    </div>
+    
+    <div class="divider"></div>
+
+    <div class="features-container">
+        <div class="feature-box">
+            <h3>⚡ 高性能</h3>
+            <p>采用先进的RIFE算法，提供极致的帧率补偿体验</p>
+        </div>
+        <div class="feature-box">
+            <h3>🚀 易用性</h3>
+            <p>简单直观的操作UI，快速上手无压力</p>
+        </div>
+        <div class="feature-box">
+            <h3>⛓ 兼容性</h3>
+            <p>支持多种主流视频格式:MP4 × AVi × MKV</p>
+        </div>
+    </div>
+
+    <div class="ui-showcase">
+        <h2>🎨UI预览</h2>
+        <div class="ui-image-container">
+            <a href="javascript:void(0);" onclick="return false;">
+                <img src="https://c-ssl.duitang.com/uploads/blog/202104/03/20210403031036_0e76b.jpg" alt="EFR-RIFE UI界面预览" class="ui-image">
+            </a>
+        </div>
+    </div>
+
+    <!-- 添加说明文本框和对比框 -->
+    <div class="comparison-section">
+        <div class="description-box">
+            <h3>⚡帧率补帧效果</h3>
+            <p>通过RIFE算法实现流畅的视频帧率提升，让画面更加丝滑自然</p>
+        </div>
+        
+        <div class="comparison-container">
+            <div class="comparison-box">
+                <h4>𝙉 补帧前</h4>
+                <div class="comparison-image-container">
+                    <img src="https://c-ssl.duitang.com/uploads/blog/202104/25/20210425081308_9d00d.jpg" alt="补偿前效果" class="comparison-image">
+                </div>
+            </div>
+            <div class="comparison-box">
+                <h4>𝙃 补帧后</h4>
+                <div class="comparison-image-container">
+                    <img src="https://c-ssl.duitang.com/uploads/blog/202104/25/20210425081446_e6c19.jpg" alt="补偿后效果" class="comparison-image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加新的文本框section -->
+    <div class="features-container">
+        <div class="feature-box">
+            <h3>🎯 精准补帧</h3>
+            <p>独特的运动矢量分析技术，精确计算帧间变化，实现更自然的画面过渡，有效避免"鬼影"等补帧瑕疵。</p>
+        </div>
+        <div class="feature-box">
+            <h3>💾 智能内存</h3>
+            <p>根据不同显卡的显存大小，自动调整补帧的内存占用，确保流畅运行。</p>
+        </div>
+        <div class="feature-box">
+            <h3>⚙️ 倍率选择</h3>
+            <p>根据不同的视频帧率，可手动选择倍率，达到你想要的补帧效果。</p>
+        </div>
+    </div>
+
+    <div class="features-container special-layout">
+        <div class="feature-box large-box">
+            <h3>📈​ 目前SUPPORT动漫补帧</h3>
+            <p>目前只针对动漫补帧后续将会更新更多支持，敬请期待吧。</p>
+        </div>
+        <div class="feature-box medium-box">
+            <h3>🖨 适配</h3>
+            <p> 显存: 8GB 及以上 支持CUDA的NVIDIA显卡RTX 3060 (8GB/12GB) RTX 3070 (8GB)RTX 4060 (8GB)</p>
+            <p> 内存: 16GB 及以上 CPU: 12代及以上</p>
+        </div>
+    </div>
+
+    <!-- 添加新的分隔线 -->
+    <div class="divider"></div>
+
+    <!-- 在最后一个divider后，script前添加下载区域 -->
+    <div class="download-section">
+        <div class="download-container">
+            <h2 class="download-title">📥 立即下载</h2>
+            <p class="version-info">EFR Community Edition v1.0.0</p>
+            <div class="buttons-container">
+                <a href="#" class="download-button">
+                    <i class="fas fa-download"></i> 下载 EFR
+                </a>
+                <a href="#" class="support-button">
+                    <i class="fas fa-heart"></i> 支持我们
+                </a>
+            </div>
+            <p class="download-info">支持 Windows 10/11 64位系统</p>
+        </div>
+    </div>
+
+    <!-- 在下载区域后，script标签前添加版权信息 -->
+    <div class="footer">
+        <p>© 2024 <span class="team-name">ENDLESS</span> 团队</p>
+        <p>保留所有权利</p>
+    </div>
+
+    <script>
+        const themeSwitch = document.querySelector('.theme-switch');
+        const themeIcon = themeSwitch.querySelector('i');
+        const html = document.documentElement;
+        
+        themeSwitch.addEventListener('click', () => {
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // 在原有script的最后添加
+        // 添加动画类
+        document.addEventListener('DOMContentLoaded', () => {
+            const elements = document.querySelectorAll('.content-container, .features-container, .ui-showcase, .comparison-section, .download-section, .footer');
+            elements.forEach(element => {
+                element.classList.add('animate-drop');
+            });
+        });
+    </script>
+</body>
+</html> 
