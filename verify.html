@@ -295,6 +295,91 @@
             border-radius: 1px;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);  /* 添加阴影使白线更清晰 */
         }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .verify-container {
+                width: 100%;
+                max-width: none;
+                padding: 20px;
+                margin: 0;
+                background: rgba(255, 255, 255, 0.15);
+            }
+
+            .verify-title {
+                font-size: 1.4rem;
+                margin-bottom: 15px;
+            }
+
+            .verify-description {
+                font-size: 0.9rem;
+                margin-bottom: 20px;
+            }
+
+            .verify-box {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+
+            .slider-container {
+                height: 50px;  /* 增加触摸区域 */
+            }
+
+            .slider-button {
+                width: 44px;  /* 增大按钮尺寸 */
+                height: 44px;
+                top: 3px;
+            }
+
+            /* 调整视频背景 */
+            .video-background video {
+                width: 200%;
+                height: 200%;
+                transform: translate(-50%, -50%) scale(0.4);
+            }
+        }
+
+        /* 横屏模式 */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .verify-container {
+                max-width: 500px;
+                margin: 10px auto;
+            }
+
+            .video-background video {
+                width: 220%;
+                height: 220%;
+                transform: translate(-50%, -50%) scale(0.35);
+            }
+        }
+
+        /* 小屏幕设备 */
+        @media (max-width: 360px) {
+            .verify-container {
+                padding: 15px;
+            }
+
+            .verify-title {
+                font-size: 1.2rem;
+            }
+
+            .verify-description {
+                font-size: 0.85rem;
+            }
+
+            .slider-container {
+                height: 45px;
+            }
+
+            .slider-button {
+                width: 38px;
+                height: 38px;
+            }
+        }
     </style>
 </head>
 <body>

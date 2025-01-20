@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://s2.loli.net/2024/12/06/WkojsReL4uNXrb6.png" type="image/png">
+    <link rel="shortcut icon" href="https://s2.loli.net/2024/12/06/WkojsReL4uNXrb6.png" type="image/png">
+    <title>EFR × RIFE - 移动版</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="deviceDetector.js"></script>
+    <style>
+        /* 移动端专用样式 */
+        :root {
+            --bg-gradient-from: #ffffff;
+            --bg-gradient-to: #f5f5f5;
+            --text-color: #333;
+            --hover-color: #F97794;
+            --page-background: #ffffff;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+            --underline-gradient: linear-gradient(90deg, #F97794, #623AA2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            background-color: var(--page-background);
+            line-height: 1.6;
+        }
+
+        /* 移动端导航栏 */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            padding: 15px;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            z-index: 1000;
+        }
+
+        .mobile-nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mobile-logo {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .mobile-menu-button {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            padding: 5px;
+        }
+
+        /* 移动端菜单 */
+        .mobile-menu {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            padding: 20px;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            z-index: 999;
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+
+        .mobile-menu a {
+            display: block;
+            padding: 15px;
+            color: var(--text-color);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        /* 主要内容区域 */
+        .mobile-content {
+            margin-top: 70px;
+            padding: 20px;
+        }
+
+        .mobile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .mobile-icon {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 15px;
+        }
+
+        .mobile-header h1 {
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .mobile-header h2 {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .mobile-features {
+            margin-bottom: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .feature-card h3 {
+            color: var(--text-color);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .feature-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .mobile-ui-preview {
+            margin-bottom: 30px;
+        }
+
+        .mobile-ui-preview h2 {
+            text-align: center;
+            color: var(--text-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .preview-container {
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .preview-container img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .mobile-download {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            border-radius: 15px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .mobile-download h2 {
+            color: var(--text-color);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .version {
+            color: var(--text-color);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .download-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .download-btn, .support-btn {
+            display: block;
+            padding: 15px;
+            background: linear-gradient(90deg, #F97794, #623AA2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+
+        .system-req {
+            color: var(--text-color);
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        /* 视频对比区域样式 */
+        .mobile-comparison {
+            margin-bottom: 30px;
+        }
+
+        .description-card {
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .description-card h3 {
+            color: var(--text-color);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .video-container {
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .video-container h4 {
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .video-container video {
+            width: 100%;
+            border-radius: 10px;
+            background: #000;
+        }
+
+        /* 支持信息卡片样式 */
+        .support-info {
+            margin-bottom: 30px;
+        }
+
+        .info-card {
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px var(--shadow-color);
+        }
+
+        .info-card h3 {
+            color: var(--text-color);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .info-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        /* 添加视频控制样式 */
+        video::-webkit-media-controls {
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            border-radius: 10px;
+        }
+
+        video::-webkit-media-controls-panel {
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 移动端导航栏 -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-content">
+            <a href="#" class="mobile-logo">EFR×RIFE</a>
+            <button class="mobile-menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- 移动端菜单 -->
+    <div class="mobile-menu">
+        <a href="mobile-index.html">🛖 首页</a>
+        <a href="mobile-about.html">👥 关于我们</a>
+        <a href="mobile-about-efr.html">关于 × EFR</a>
+    </div>
+
+    <!-- 主要内容区域 -->
+    <div class="mobile-content">
+        <!-- 图标和标题区域 -->
+        <div class="mobile-header">
+            <img src="https://s2.loli.net/2024/12/06/WkojsReL4uNXrb6.png" alt="EFR-RIFE Logo" class="mobile-icon">
+            <h1>EFR×RIFE</h1>
+            <h2>Endless Frame rate</h2>
+        </div>
+
+        <!-- 特性卡片区域 -->
+        <div class="mobile-features">
+            <div class="feature-card">
+                <h3>⚡ 性能</h3>
+                <p>采用先进的RIFE算法.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🚀 易用性</h3>
+                <p>简单直观的操作UI，快速上手无压力</p>
+            </div>
+            <div class="feature-card">
+                <h3>⛓ 兼容性</h3>
+                <p>支持多种主流视频格式:MP4 × AVi × MKV</p>
+            </div>
+        </div>
+
+        <!-- UI预览区域 -->
+        <div class="mobile-ui-preview">
+            <h2>🎨UI预览</h2>
+            <div class="preview-container">
+                <img src="https://s2.loli.net/2024/12/06/EzVQBGtMXhgiekJ.png" alt="EFR-RIFE UI界面预览">
+            </div>
+        </div>
+
+        <!-- 视频对比区域 -->
+        <div class="mobile-comparison">
+            <div class="description-card">
+                <h3>⚡帧率补帧效果</h3>
+                <p>通过RIFE算法实现流畅的视频帧率提升，让画面更加丝滑自然</p>
+            </div>
+            
+            <div class="video-container">
+                <h4>𝙉 补帧前</h4>
+                <video controls muted loop playsinline>
+                    <source src="videos/1.mp4" type="video/mp4">
+                    您的浏览器不支持视频标签。
+                </video>
+            </div>
+            
+            <div class="video-container">
+                <h4>𝙃 补帧后</h4>
+                <video controls muted loop playsinline>
+                    <source src="videos/2.mp4" type="video/mp4">
+                    您的浏览器不支持视频标签。
+                </video>
+            </div>
+        </div>
+
+        <!-- 额外功能卡片 -->
+        <div class="mobile-features">
+            <div class="feature-card">
+                <h3>🎯 补帧</h3>
+                <p>有但是，效果没大团队的效果好（后续会更新争取更好的补帧效果）</p>
+            </div>
+            <div class="feature-card">
+                <h3>💾 内存</h3>
+                <p>有内存控制但是，没大团队好（后续会更新争取更好的补帧效果）</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚙️ 倍率选择</h3>
+                <p>根据用户不同需要，可手动选择倍率，达到你想要的补帧效果，没大团队好（后续会更新争取更好的补帧效果）</p>
+            </div>
+        </div>
+
+        <!-- 添加支持信息卡片 -->
+        <div class="support-info">
+            <div class="info-card large">
+                <h3>📈​ 目前SUPPORT动漫补帧</h3>
+                <p>目前只针对动漫补帧后续将会更新更多支持，敬请期待吧。</p>
+            </div>
+            <div class="info-card">
+                <h3>🖨 适配要求</h3>
+                <p>显存: 8GB 及以上 支持CUDA的NVIDIA显卡</p>
+                <p>RTX 3060 (8GB/12GB) RTX 3070 (8GB)RTX 4060 (8GB)</p>
+                <p>内存: 16GB 及以上 CPU: 12代及以上</p>
+            </div>
+        </div>
+
+        <!-- 下载区域 -->
+        <div class="mobile-download">
+            <h2>📥 立即下载</h2>
+            <p class="version">EFR Community Edition v1.0.0</p>
+            <div class="download-buttons">
+                <a href="https://www.123684.com/s/1NYlVv-gkBGd" class="download-btn">
+                    <i class="fas fa-download"></i> 下载 EFR
+                </a>
+                <a href="#" class="support-btn">
+                    <i class="fas fa-heart"></i> 支持我们
+                </a>
+            </div>
+            <p class="system-req">支持 Windows 10/11 64位系统</p>
+        </div>
+    </div>
+
+    <script>
+        // 移动端菜单控制
+        const menuButton = document.querySelector('.mobile-menu-button');
+        const mobileMenu = document.querySelector('.mobile-menu');
+
+        menuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            const icon = menuButton.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+    </script>
+</body>
+</html> 
