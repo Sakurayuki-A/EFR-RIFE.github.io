@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://s2.loli.net/2024/12/06/WkojsReL4uNXrb6.png" type="image/png">
     <link rel="shortcut icon" href="https://s2.loli.net/2024/12/06/WkojsReL4uNXrb6.png" type="image/png">
-    <title>关于我们 - EFR × RIFE</title>
+    <title>关于 EFR - EFR × RIFE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -16,6 +16,7 @@
             --page-background: #ffffff;
             --shadow-color: rgba(0, 0, 0, 0.3);
             --underline-gradient: linear-gradient(90deg, #F97794, #623AA2);
+            --hover-color-bg: rgba(249, 119, 148, 0.1);
         }
 
         [data-theme="dark"] {
@@ -26,6 +27,7 @@
             --page-background: #000000;
             --shadow-color: rgba(255, 255, 255, 0.4);
             --underline-gradient: linear-gradient(90deg, #F97794, #00a8ff);
+            --hover-color-bg: rgba(249, 119, 148, 0.2);
         }
 
         * {
@@ -40,7 +42,7 @@
             transition: background-color 0.3s ease;
         }
 
-        /* 导航栏样式 - 与index.html相同 */
+        /* 导航栏样式 */
         nav {
             position: fixed;
             left: 0;
@@ -66,6 +68,7 @@
             padding: 20px 0;
         }
 
+        /* Logo样式 */
         .logo {
             color: var(--text-color);
             font-size: 1.2rem;
@@ -87,6 +90,7 @@
             opacity: 1;
         }
 
+        /* 导航链接样式 */
         .nav-links {
             list-style: none;
             display: flex;
@@ -123,10 +127,11 @@
         }
 
         .nav-links a:hover {
-            background-color: var(--hover-color-bg, rgba(249, 119, 148, 0.1));
+            background-color: var(--hover-color-bg);
             color: var(--hover-color);
         }
 
+        /* 主题切换按钮样式 */
         .theme-switch {
             margin-top: auto;
             background: none;
@@ -157,276 +162,168 @@
         }
 
         .theme-switch:hover {
-            background-color: var(--hover-color-bg, rgba(249, 119, 148, 0.1));
+            background-color: var(--hover-color-bg);
             color: var(--hover-color);
         }
 
-        /* 关于我们页面特定样式 */
-        .about-container {
+        /* 页面内容样式 */
+        .efr-container {
+            margin: 0 auto;
+            padding: 40px;
             max-width: 1200px;
-            margin: 100px auto 40px;
-            padding: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 80px;
         }
 
-        .about-header {
+        .efr-header {
             text-align: center;
-            margin-bottom: 50px;
-            color: var(--text-color);
-            animation-delay: 0.2s;
+            margin: 0 auto 40px;
+            padding: 30px;
+            max-width: 900px;
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            border-radius: 20px;
+            box-shadow: 0 4px 20px var(--shadow-color);
         }
 
-        .about-header h1 {
+        .efr-header h1 {
+            color: var(--text-color);
             font-size: 2.5rem;
             margin-bottom: 20px;
         }
 
-        .about-header p {
+        .efr-header p {
+            color: var(--text-color);
             font-size: 1.2rem;
             line-height: 1.6;
-            opacity: 0.8;
         }
 
-        .team-section {
+        .info-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 30px;
-            margin-top: 50px;
-            animation-delay: 0.4s;
+            margin: 40px auto;
+            max-width: 1100px;
         }
 
-        .team-member {
+        .info-card {
             background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
             border-radius: 20px;
             padding: 30px;
-            text-align: center;
             box-shadow: 0 4px 20px var(--shadow-color);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        .team-member::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            border-radius: 20px;
-            background: linear-gradient(45deg, #F97794, #623AA2);
-            opacity: 0;
-            z-index: -1;
-            transition: opacity 0.3s ease;
-            filter: blur(15px);
-            transform: translateY(10px) scale(0.95);
-        }
-
-        .team-member:hover {
-            transform: translateY(-10px) scale(1.03);
-            box-shadow: 0 10px 30px rgba(249, 119, 148, 0.3);
-        }
-
-        .team-member:hover::before {
-            opacity: 0.7;
-        }
-
-        [data-theme="dark"] .team-member::before {
-            background: linear-gradient(45deg, #F97794, #00a8ff);
-        }
-
-        .member-avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            overflow: hidden;
-            transition: transform 0.3s ease;
-        }
-
-        .member-avatar img {
-            width: 100%;
             height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
         }
 
-        .team-member:hover .member-avatar {
-            transform: scale(1.05);
-        }
-
-        .team-member:hover .member-avatar img {
-            transform: scale(1.1);
-        }
-
-        .member-info h3,
-        .member-info p {
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
-        .team-member:hover .member-info h3 {
-            color: var(--hover-color);
-            transform: translateY(-2px);
-        }
-
-        .team-member:hover .member-info p {
-            transform: translateY(-2px);
-        }
-
-        .member-info h3 {
+        .info-card h3 {
             color: var(--text-color);
             font-size: 1.5rem;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--hover-color);
+            padding-bottom: 10px;
         }
 
-        .member-info p {
+        .info-card ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .info-card li {
             color: var(--text-color);
-            opacity: 0.8;
-            line-height: 1.6;
+            margin: 10px 0;
+            padding-left: 20px;
+            position: relative;
         }
 
-        .contact-section {
-            margin-top: 60px;
-            text-align: center;
-            padding: 40px;
+        .info-card li::before {
+            content: '•';
+            color: var(--hover-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .function-group {
+            margin-bottom: 25px;
+        }
+
+        .function-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .function-group h4 {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .author-message {
+            margin: 40px auto;
+            max-width: 900px;
+            padding: 30px;
             background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
             border-radius: 20px;
             box-shadow: 0 4px 20px var(--shadow-color);
-            animation-delay: 0.6s;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .contact-section:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 10px 30px var(--shadow-color);
-        }
-
-        .contact-section h2 {
+        .author-message h3 {
             color: var(--text-color);
-            font-size: 2rem;
-            margin-bottom: 30px;
-        }
-
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--text-color);
-            transition: transform 0.3s ease;
-        }
-
-        .contact-item:hover {
-            transform: scale(1.1);
-            color: var(--hover-color);
-        }
-
-        .contact-item i {
             font-size: 1.5rem;
-            color: var(--hover-color);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--hover-color);
+            padding-bottom: 10px;
         }
 
-        @keyframes dropIn {
-            0% {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animate-drop {
-            opacity: 0;
-            animation: dropIn 0.8s ease forwards;
-        }
-
-        .footer {
-            max-width: 1200px;
-            margin: 40px auto 20px;
-            padding: 20px;
-            text-align: center;
+        .author-message p {
             color: var(--text-color);
-            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            line-height: 1.8;
+            margin-bottom: 15px;
         }
 
-        .footer p {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin: 5px 0;
+        .author-message p:last-child {
+            margin-bottom: 0;
         }
 
-        .footer .team-name {
-            font-weight: bold;
-            color: var(--hover-color);
+        /* 动画效果 */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 在现有样式的最后添加移动端适配 */
+        .animate-fade {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .info-cards {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 800px;
+            }
+        }
+
         @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                padding: 10px;
+            .efr-container {
+                padding: 20px;
+                padding-left: 70px;
             }
 
-            .nav-links {
-                flex-direction: column;
-                width: 100%;
-                text-align: center;
-                padding: 0;
-                margin: 10px 0;
-                gap: 1rem;
-            }
-
-            .logo {
-                margin: 10px 0;
-            }
-
-            .about-container {
-                margin-top: 150px;
-                padding: 10px;
-            }
-
-            .about-header h1 {
+            .efr-header h1 {
                 font-size: 2rem;
             }
 
-            .team-section {
+            .info-cards {
                 grid-template-columns: 1fr;
-                gap: 20px;
-                padding: 10px;
+                max-width: 500px;
             }
 
-            .team-member {
+            .info-card {
                 padding: 20px;
             }
 
-            .contact-section {
-                padding: 20px;
-            }
-
-            .contact-info {
-                flex-direction: column;
-                gap: 20px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .about-header h1 {
-                font-size: 1.8rem;
-            }
-
-            .member-info h3 {
-                font-size: 1.3rem;
-            }
-
-            .contact-section h2 {
-                font-size: 1.6rem;
+            .efr-header,
+            .author-message {
+                max-width: 500px;
             }
         }
 
@@ -537,7 +434,7 @@
             background: var(--text-color);
             border-radius: 2px;
             transition: all 0.3s ease;
-            height: 100%;
+            height: 100%;  /* 确保方块填满空间 */
         }
 
         /* 移动端导航栏样式 */
@@ -549,7 +446,7 @@
             /* 确保主题切换按钮在最底部 */
             .theme-switch {
                 margin-top: auto;
-                margin-bottom: 20px;
+                margin-bottom: 20px;  /* 添加底部间距 */
             }
 
             nav {
@@ -579,15 +476,39 @@
     </style>
 </head>
 <body>
+    <div id="mobileAlert">
+        <p>ENDLESS--检测出您是移动设备访问现将网站自适应</p>
+    </div>
+
     <script>
         // 检查验证状态
         if (sessionStorage.getItem('verified') !== 'true') {
             window.location.href = 'verify.html';
         }
+
+        // 检测移动设备并显示提示
+        function checkMobileDevice() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                            window.innerWidth <= 768;
+            
+            if (isMobile) {
+                const mobileAlert = document.getElementById('mobileAlert');
+                mobileAlert.style.display = 'block';
+                
+                // 3秒后移除提示框
+                setTimeout(() => {
+                    mobileAlert.addEventListener('animationend', function(e) {
+                        if (e.animationName === 'fadeOut') {
+                            this.style.display = 'none';
+                        }
+                    });
+                }, 3000);
+            }
+        }
+
+        // 页面加载完成后执行检测
+        window.addEventListener('load', checkMobileDevice);
     </script>
-    <div id="mobileAlert">
-        <p>ENDLESS--检测出您是移动设备访问现将网站自适应</p>
-    </div>
 
     <div class="mobile-menu-toggle">
         <div class="grid-icon">
@@ -597,6 +518,7 @@
             <span></span>
         </div>
     </div>
+
     <nav>
         <div class="nav-container">
             <a href="#" class="logo">
@@ -629,72 +551,67 @@
         </div>
     </nav>
 
-    <div class="about-container">
-        <div class="about-header animate-drop">
-            <h1>关于我们</h1>
-            <p>我们是一个充满激情的团队，致力于为用户提供最优质产品</p>
+    <div class="efr-container">
+        <div class="efr-header animate-fade">
+            <h1>关于 EFR × RIFE</h1>
+            <p>EFR × RIFE 是一个专业的视频补帧工具，结合了多种先进的计算机视觉算法，并针对性能和用户体验做了大量优化。</p>
         </div>
 
-        <div class="team-section">
-            <div class="team-member animate-drop">
-                <div class="member-avatar">
-                    <img src="https://s2.loli.net/2024/12/06/KrT5zBAufC42LjP.jpg" alt="团队成员1">
+        <div class="info-cards">
+            <div class="info-card animate-fade">
+                <h3>基本信息</h3>
+                <ul>
+                    <li>名称: EFR Community Edition</li>
+                    <li>版本: 1.0.0</li>
+                    <li>开发者: • Sakurayuki • 3F</li>
+                    <li>版权所有: All Rights Reserved ENDLESS © 2024</li>
+                </ul>
+            </div>
+
+            <div class="info-card animate-fade">
+                <h3>核心功能</h3>
+                <div class="function-group">
+                    <h4>补帧能力:</h4>
+                    <ul>
+                        <li>支持2x/4x补帧</li>
+                        <li>自适应尺度补帧</li>
+                        <li>场景检测功能</li>
+                        <li>时域平滑处理</li>
+                    </ul>
                 </div>
-                <div class="member-info">
-                    <h3>× Sakurayuki</h3>
-                    <p>ENDLESS创始人</p>
-                    <p>普通职高生</p>
+                <div class="function-group">
+                    <h4>智能处理:</h4>
+                    <ul>
+                        <li>自动帧景检测</li>
+                        <li>运动估值</li>
+                        <li>深度估计</li>
+                        <li>光流计算优化</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="team-member animate-drop">
-                <div class="member-avatar">
-                    <img src="https://s2.loli.net/2024/12/06/7ov3aTMi4wWB2kb.jpg" alt="团队成员2">
-                </div>
-                <div class="member-info">
-                    <h3>× 3F</h3>
-                    <p>COO</p>
-                    <p></p>
-                </div>
-            </div>
-
-            <div class="team-member animate-drop">
-                <div class="member-avatar">
-                    <img src="https://s2.loli.net/2024/12/07/MxByCtPXJ8V7eas.png" alt="团队成员3">
-                </div>
-                <div class="member-info">
-                    <h3></h3>
-                    <p></p>
-                    <p></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="contact-section animate-drop">
-            <h2>联系我们</h2>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>zzero3888@gmail.com</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-github"></i>
-                    <span>github.com/Sakurayuki</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fab fa-weixin"></i>
-                    <span>× Sakurayuki</span>
+            <div class="info-card animate-fade">
+                <h3>技术特点</h3>
+                <div class="function-group">
+                    <h4>算法支持:</h4>
+                    <ul>
+                        <li>RIFE 算法</li>
+                        <li>RAFT 光流算法</li>
+                        <li>MiDaS 深度估计</li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="footer animate-drop">
-        <p>© 2024 <span class="team-name">ENDLESS</span> 团队</p>
-        <p>保留所有权利</p>
+        <div class="author-message animate-fade">
+            <h3>作者的话</h3>
+            <p>感谢您选择使用 EFR × RIFE，这个项目凝聚了我们团队的心血和对技术的追求。我们致力于为用户提供最优质的视频补帧体验，希望这个工具能够帮助您创造出更加流畅、自然的视频作品。</p>
+            <p>现处于1.0.0的社区公开测试版本，作者还在上学时间不多，都是使用Ai做的本网站也是但都是自己的想法，一定有很多不足，请多多包涵，我们后续会跟着版本的更新迭代EFR × RIFE会变得更好。</p>
+        </div>
     </div>
 
     <script>
+        // 主题切换
         const themeSwitch = document.querySelector('.theme-switch');
         const themeIcon = themeSwitch.querySelector('i');
         const html = document.documentElement;
@@ -711,45 +628,25 @@
             }
         });
 
-        // 修改动画初始化代码
+        // 添加动画
         document.addEventListener('DOMContentLoaded', () => {
-            const elements = document.querySelectorAll('.animate-drop');
+            const elements = document.querySelectorAll('.animate-fade');
             elements.forEach((element, index) => {
                 element.style.animationDelay = `${index * 0.2}s`;
             });
         });
 
-        // 检测移动设备并显示提示
-        function checkMobileDevice() {
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-                            window.innerWidth <= 768;
-            
-            if (isMobile) {
-                const mobileAlert = document.getElementById('mobileAlert');
-                mobileAlert.style.display = 'block';
-                
-                // 3秒后移除提示框
-                setTimeout(() => {
-                    mobileAlert.addEventListener('animationend', function(e) {
-                        if (e.animationName === 'fadeOut') {
-                            this.style.display = 'none';
-                        }
-                    });
-                }, 3000);
-            }
-        }
-
         // 移动端菜单处理
         const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-        const navElement = document.querySelector('nav');
+        const nav = document.querySelector('nav');
 
         function toggleMobileMenu() {
-            navElement.classList.toggle('active');
+            nav.classList.toggle('active');
             
             // 更新图标状态
             const spans = document.querySelectorAll('.grid-icon span');
             spans.forEach(span => {
-                span.style.background = navElement.classList.contains('active') ? 
+                span.style.background = nav.classList.contains('active') ? 
                     'var(--hover-color)' : 'var(--text-color)';
             });
         }
@@ -760,8 +657,8 @@
 
         // 点击导航栏外部时关闭菜单
         document.addEventListener('click', (e) => {
-            if (!navElement.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-                navElement.classList.remove('active');
+            if (!nav.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                nav.classList.remove('active');
                 const spans = document.querySelectorAll('.grid-icon span');
                 spans.forEach(span => {
                     span.style.background = 'var(--text-color)';
@@ -775,16 +672,15 @@
                             window.innerWidth <= 768;
             
             if (isMobile) {
-                navElement.classList.remove('active');
+                nav.classList.remove('active');
                 mobileMenuToggle.style.display = 'block';
             } else {
                 mobileMenuToggle.style.display = 'none';
-                navElement.classList.remove('active');
+                nav.classList.remove('active');
             }
         }
 
         // 页面加载和窗口大小改变时检测
-        window.addEventListener('load', checkMobileDevice);
         window.addEventListener('load', setNavbarStyle);
         window.addEventListener('resize', setNavbarStyle);
     </script>
