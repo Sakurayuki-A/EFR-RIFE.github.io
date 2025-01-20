@@ -557,6 +557,12 @@
     </style>
 </head>
 <body>
+    <script>
+        // 检查验证状态
+        if (sessionStorage.getItem('verified') !== 'true') {
+            window.location.href = 'verify.html';
+        }
+    </script>
     <nav>
         <div class="nav-container">
             <a href="#" class="logo">EFR×RIFE</a>

@@ -346,21 +346,57 @@
         }
 
         .comparison-image-container {
+            position: relative;
             width: 100%;
             border-radius: 10px;
             overflow: hidden;
+        }
+
+        .comparison-image-container video {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background: #000;
+        }
+
+        .view-more {
+            display: block;
+            text-decoration: none;
+            margin-top: 10px;
         }
 
         .comparison-image {
             width: 100%;
             height: auto;
             display: block;
-            transition: transform 0.3s ease;
+            border-radius: 10px;
+            transition: filter 0.3s ease;
+        }
+
+        .view-more:hover .comparison-image {
+            filter: brightness(1.1);
+        }
+
+        /* 视频控制样式 */
+        video {
+            width: 100%;
+            border-radius: 10px;
+            background: var(--bg-gradient-from);
+        }
+
+        video::-webkit-media-controls {
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
             border-radius: 10px;
         }
 
-        .comparison-image:hover {
-            transform: scale(1.02);
+        video::-webkit-media-controls-panel {
+            padding: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-image-container video {
+                margin-bottom: 5px;
+            }
         }
 
         .features-container special-layout {
@@ -700,6 +736,12 @@
     </style>
 </head>
 <body>
+    <script>
+        // 检查验证状态
+        if (sessionStorage.getItem('verified') !== 'true') {
+            window.location.href = 'verify.html';
+        }
+    </script>
     <nav>
         <div class="nav-container">
             <a href="#" class="logo">EFR×RIFE</a>
@@ -761,21 +803,19 @@
             <div class="comparison-box">
                 <h4>𝙉 补帧前</h4>
                 <div class="comparison-image-container">
-                    <a href="https://www.bilibili.com/video/BV15aiiYsEWx/?spm_id_from=333.999.0.0&vd_source=ccce793253b717eba36c7eedc7483098" target="_blank" rel="noopener noreferrer">
-                        <img src="https://s2.loli.net/2024/12/07/w4ipf5WXBzsZkC2.png" 
-                             alt="补偿前效果" 
-                             class="comparison-image">
-                    </a>
+                    <video width="100%" controls muted loop id="video1">
+                        <source src="videos/1.mp4" type="video/mp4">
+                        您的浏览器不支持视频标签。
+                    </video>
                 </div>
             </div>
             <div class="comparison-box">
                 <h4>𝙃 补帧后</h4>
                 <div class="comparison-image-container">
-                    <a href="https://www.bilibili.com/video/BV1RaiiYWEKT/?spm_id_from=333.999.0.0&vd_source=ccce793253b717eba36c7eedc7483098" target="_blank" rel="noopener noreferrer">
-                        <img src="https://s2.loli.net/2024/12/07/k4FImsJhUwYMnV7.png" 
-                             alt="补偿后效果" 
-                             class="comparison-image">
-                    </a>
+                    <video width="100%" controls muted loop id="video2">
+                        <source src="videos/2.mp4" type="video/mp4">
+                        您的浏览器不支持视频标签。
+                    </video>
                 </div>
             </div>
         </div>
@@ -852,9 +892,23 @@
             }
         });
 
-        // 在原有script的最后添加
-        // 添加动画类
+        // 添加延迟播放功能
         document.addEventListener('DOMContentLoaded', () => {
+            // 获取视频元素
+            const video1 = document.getElementById('video1');
+            const video2 = document.getElementById('video2');
+            
+            // 2秒后开始播放视频
+            setTimeout(() => {
+                video1.play().catch(function(error) {
+                    console.log("视频播放失败:", error);
+                });
+                video2.play().catch(function(error) {
+                    console.log("视频播放失败:", error);
+                });
+            }, 2000);  // 2000毫秒 = 2秒
+            
+            // 保留原有的动画代码
             const elements = document.querySelectorAll('.content-container, .features-container, .ui-showcase, .comparison-section, .download-section, .footer');
             elements.forEach(element => {
                 element.classList.add('animate-drop');
