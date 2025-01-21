@@ -473,11 +473,50 @@
                 opacity: 1;
             }
         }
+
+        /* 页脚样式 */
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            border-radius: 20px;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+
+        .footer p {
+            color: var(--text-color);
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .team-name {
+            color: var(--hover-color);
+            font-weight: bold;
+        }
+
+        /* 添加页脚动画 */
+        .animate-drop {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
     <div id="mobileAlert">
-        <p>ENDLESS--检测出您是移动设备访问现将网站自适应</p>
+        <p>ApexVerve--检测出您是移动设备访问现将网站自适应</p>
     </div>
 
     <script>
@@ -564,7 +603,7 @@
                     <li>名称: EFR Community Edition</li>
                     <li>版本: 1.0.0</li>
                     <li>开发者: • Sakurayuki • 3F</li>
-                    <li>版权所有: All Rights Reserved ENDLESS © 2024</li>
+                    <li>版权所有: All Rights Reserved ApexVerve © 2024</li>
                 </ul>
             </div>
 
@@ -608,6 +647,12 @@
             <p>感谢您选择使用 EFR × RIFE，这个项目凝聚了我们团队的心血和对技术的追求。我们致力于为用户提供最优质的视频补帧体验，希望这个工具能够帮助您创造出更加流畅、自然的视频作品。</p>
             <p>现处于1.0.0的社区公开测试版本，作者还在上学时间不多，都是使用Ai做的本网站也是但都是自己的想法，一定有很多不足，请多多包涵，我们后续会跟着版本的更新迭代EFR × RIFE会变得更好。</p>
         </div>
+
+        <div class="footer animate-drop">
+            <p>© 2024 <span class="team-name">ApexVerve</span> 团队</p>
+            <p>保留所有权利</p>
+        </div>
+
     </div>
 
     <script>
