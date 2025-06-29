@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://s2.loli.net/2024/12/06/WkojsReL4uNXrb6.png" type="image/png">
-    <link rel="shortcut icon" href="https://s2.loli.net/2024/12/06/WkojsReL4uNXrb6.png" type="image/png">
+    <link rel="icon" href="IMG/icon.jpg" type="image/png">
+    <link rel="shortcut icon" href="IMG/icon.jpg" type="image/png">
     <title>关于 EFR - EFR × RIFE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -603,7 +603,7 @@
                     <li>名称: EFR Demo Edition </li>
                     <li>版本: 1.0.0</li>
                     <li>开发者: • Sakurayuki • 3F</li>
-                    <li>版权所有: All Rights Reserved Aegis © 2024</li>
+                    <li>版权所有: All Rights Reserved Aegis © 2024-2025</li>
                 </ul>
             </div>
 
@@ -649,7 +649,7 @@
         </div>
 
         <div class="footer animate-drop">
-            <p>© 2024 <span class="team-name">Aegis</span> 团队</p>
+            <p>© 2024-2025 <span class="team-name">Aegis</span> 团队</p>
             <p>保留所有权利</p>
         </div>
 
@@ -661,15 +661,31 @@
         const themeIcon = themeSwitch.querySelector('i');
         const html = document.documentElement;
         
+        // 页面加载时检查本地存储的主题设置
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                html.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                html.removeAttribute('data-theme');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        });
+        
         themeSwitch.addEventListener('click', () => {
             if (html.getAttribute('data-theme') === 'dark') {
                 html.removeAttribute('data-theme');
                 themeIcon.classList.remove('fa-moon');
                 themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'light');
             } else {
                 html.setAttribute('data-theme', 'dark');
                 themeIcon.classList.remove('fa-sun');
                 themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'dark');
             }
         });
 

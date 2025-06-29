@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://s2.loli.net/2024/12/06/WkojsReL4uNXrb6.png" type="image/png">
-    <link rel="shortcut icon" href="https://s2.loli.net/2024/12/06/WkojsReL4uNXrb6.png" type="image/png">
+    <link rel="icon" href="IMG/icon.jpg" type="image/png">
+    <link rel="shortcut icon" href="IMG/icon.jpg" type="image/png">
     <title>EFR × RIFE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -495,22 +495,22 @@
         }
 
         .download-container {
-            background: linear-gradient(45deg, var(--bg-gradient-from), var(--bg-gradient-to));
+            background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
             border-radius: 20px;
             padding: 40px;
             text-align: center;
-            box-shadow: 0 4px 20px var(--shadow-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         .download-title {
-            color: var(--text-color);
+            color: #333;
             font-size: 2rem;
             margin-bottom: 20px;
             font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
         }
 
         .version-info {
-            color: var(--text-color);
+            color: rgba(0, 0, 0, 0.7);
             font-size: 1.2rem;
             margin-bottom: 30px;
             font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
@@ -518,53 +518,135 @@
 
         .buttons-container {
             display: flex;
-            gap: 20px;
+            gap: 16px;
             justify-content: center;
             margin-bottom: 20px;
         }
 
-        .download-button {
-            display: inline-block;
-            padding: 15px 40px;
-            background: linear-gradient(90deg, #F97794, #623AA2);
-            color: white;
+        .download-button, .support-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
             text-decoration: none;
-            border-radius: 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
             font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            min-width: 160px;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
         }
 
-        .download-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(249, 119, 148, 0.4);
+        .download-button::before, .support-button::before {
+            content: '';
+            position: absolute;
+            top: -150%;
+            left: -50%;
+            width: 200%;
+            height: 400%;
+            background: conic-gradient(
+                from 0deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.8), 
+                rgba(255, 255, 255, 0.4), 
+                transparent
+            );
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .download-info {
-            color: var(--text-color);
-            margin-top: 20px;
-            font-size: 0.9rem;
-            opacity: 0.8;
-            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+        .download-button::after, .support-button::after {
+            content: '';
+            position: absolute;
+            inset: 1px; /* 1px 边框 */
+            border-radius: 7px;
+            background: inherit;
+            z-index: -1;
+        }
+
+        .download-button:hover::before, .support-button:hover::before {
+            opacity: 1;
+            animation: rotate 2s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .download-button {
+            background: black;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .support-button {
-            display: inline-block;
-            padding: 15px 40px;
-            background: linear-gradient(90deg, #F97794, #623AA2);
+            background: black;
             color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+        }
+
+        .download-button:hover {
+            background: #222;
+            transform: translateY(-1px);
         }
 
         .support-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(249, 119, 148, 0.4);
+            background: #222;
+            transform: translateY(-1px);
+        }
+
+        [data-theme="dark"] .download-button {
+            background: black;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        [data-theme="dark"] .support-button {
+            background: black;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* 修改下载按钮光效 */
+        .download-button::before {
+            background: conic-gradient(
+                from 0deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.8), 
+                rgba(255, 255, 255, 0.4), 
+                transparent
+            );
+        }
+
+        .download-info {
+            color: rgba(0, 0, 0, 0.7);
+            margin-top: 20px;
+            font-size: 0.9rem;
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+        }
+
+        /* 深色模式设置 */
+        [data-theme="dark"] .download-container {
+            background: linear-gradient(to bottom, #000000, #1a1a1a);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        [data-theme="dark"] .download-title {
+            color: #fff;
+        }
+
+        [data-theme="dark"] .version-info,
+        [data-theme="dark"] .download-info {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .footer {
@@ -907,6 +989,229 @@
                 opacity: 1;
             }
         }
+        
+        /* 图标样式 - 添加分离效果和光晕 */
+        .animated-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000000;
+            border-radius: 15px;
+            padding: 20px;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .animated-logo::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(153, 0, 0, 0.6) 0%, rgba(153, 0, 0, 0.1) 50%, rgba(153, 0, 0, 0) 70%);
+            transform: translate(-50%, -50%);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            z-index: 0;
+            filter: blur(2px);
+        }
+        
+        .animated-logo.active::before {
+            width: 180px;
+            height: 180px;
+            opacity: 0.9;
+        }
+        
+        .animated-logo:hover::before {
+            width: 180px;
+            height: 180px;
+            opacity: 0.9;
+        }
+        
+        .animated-logo svg {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .triangle-part {
+            transition: transform 0.3s ease;
+        }
+        
+        .animated-logo.active .top-left,
+        .animated-logo:hover .top-left {
+            transform: translate(-3px, -3px);
+            filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+        }
+        
+        .animated-logo.active .top-right,
+        .animated-logo:hover .top-right {
+            transform: translate(3px, -3px);
+            filter: drop-shadow(0 0 2px rgba(153, 0, 0, 0.7));
+        }
+        
+        .animated-logo.active .bottom,
+        .animated-logo:hover .bottom {
+            transform: translateY(3px);
+            filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5));
+        }
+        
+        [data-theme="dark"] .animated-logo {
+            background: #000000;
+        }
+
+        .download-button i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .download-button span, .support-button span {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 添加系统检测弹窗 */
+        .system-check {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 300px;
+            background-color: rgba(20, 20, 20, 0.95);
+            border-radius: 6px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            color: white;
+            padding: 15px;
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif;
+            z-index: 9999;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transform-origin: bottom right;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            will-change: transform, opacity;
+        }
+        
+        .system-check-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .system-check-icon {
+            width: 22px;
+            height: 22px;
+            background-color: #e62e2e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+        
+        .system-check-title {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+        
+        .system-check-content {
+            margin-bottom: 10px;
+        }
+        
+        .check-status {
+            font-size: 12px;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            letter-spacing: 0.2px;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 5px;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: #e62e2e;
+            width: 0%;
+            transition: width 0.2s ease;
+            border-radius: 2px;
+        }
+        
+        .progress-percentage {
+            font-size: 12px;
+            text-align: right;
+            color: #f1c40f;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+        
+        .system-check-result {
+            font-size: 13px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .result-pass {
+            color: #2ecc71;
+            font-weight: 500;
+        }
+        
+        .result-fail {
+            color: #e74c3c;
+            font-weight: 500;
+        }
+
+        /* 更平滑的消失动画 - 确保动画执行 */
+        @keyframes smoothDisappear {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+                filter: blur(0);
+            }
+            100% {
+                transform: translateY(30px);
+                opacity: 0;
+                filter: blur(2px);
+            }
+        }
+        
+        .system-check.exit-animation {
+            animation: smoothDisappear 1.2s forwards ease-in-out !important;
+        }
+
+        /* 系统检测弹窗出现动画 */
+        @keyframes professionalAppear {
+            0% {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .system-check.enter-animation {
+            animation: professionalAppear 0.4s forwards cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
     </style>
 </head>
 <body>
@@ -964,7 +1269,13 @@
 
     <div class="content-container">
         <div class="icon-section">
-            <img src="https://s2.loli.net/2024/12/06/WkojsReL4uNXrb6.png" alt="EFR-RIFE Logo" class="icon-image">
+            <div class="animated-logo" id="logo">
+                <svg viewBox="0 0 100 100" width="120" height="120">
+                    <path class="triangle-part top-left" d="M 50,10 L 10,80 L 50,50 Z" fill="#FFFFFF" />
+                    <path class="triangle-part top-right" d="M 50,10 L 90,80 L 50,50 Z" fill="#990000" />
+                    <path class="triangle-part bottom" d="M 10,80 L 90,80 L 50,50 Z" fill="#FFFFFF" />
+                </svg>
+            </div>
         </div>
         <div class="text-section">
             <h1>EFR×RIFE</h1>
@@ -1057,14 +1368,13 @@
 
     <div class="download-section">
         <div class="download-container">
-            <h2 class="download-title">📥 立即下载 </h2>
-            <p class="version-info">EFR Demo Edition 敬请期待 v1.0.0</p>
+            <p class="version-info">EFR RIFE CPv1.0</p>
             <div class="buttons-container">
-                <a href="https://www.123684.com/s/1NYlVv-gkBGd" class="download-button">
-                    <i class="fas fa-download"></i> 下载 EFR
+                <a href="https://www.123684.com/s/1NYlVv-w9IGd" class="download-button">
+                    <i class="fab fa-windows"></i> <span>下载 Windows</span>
                 </a>
                 <a href="#" class="support-button">
-                    <i class="fas fa-heart"></i> 支持我们
+                    <span>支持我们</span>
                 </a>
             </div>
             <p class="download-info">支持 Windows 10/11 64位系统</p>
@@ -1072,8 +1382,26 @@
     </div>
 
     <div class="footer">
-        <p>© 2024 <span class="team-name">Aegis</span> 团队</p>
+        <p>© 2024-2025 <span class="team-name">Aegis</span> 团队</p>
         <p>保留所有权利</p>
+    </div>
+
+    <!-- 添加系统检测弹窗 -->
+    <div id="system-check" class="system-check">
+        <div class="system-check-header">
+            <div class="system-check-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="system-check-title">Aegis Hardware Testing</div>
+        </div>
+        <div class="system-check-content">
+            <div class="check-status" id="check-status">启动中</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-percentage" id="progress-percentage">0%</div>
+        </div>
+        <div class="system-check-result" id="system-check-result"></div>
     </div>
 
     <script>
@@ -1081,15 +1409,31 @@
         const themeIcon = themeSwitch.querySelector('i');
         const html = document.documentElement;
         
+        // 页面加载时检查本地存储的主题设置
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                html.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                html.removeAttribute('data-theme');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        });
+        
         themeSwitch.addEventListener('click', () => {
             if (html.getAttribute('data-theme') === 'dark') {
                 html.removeAttribute('data-theme');
                 themeIcon.classList.remove('fa-moon');
                 themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'light');
             } else {
                 html.setAttribute('data-theme', 'dark');
                 themeIcon.classList.remove('fa-sun');
                 themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'dark');
             }
         });
 
@@ -1204,6 +1548,190 @@
         window.addEventListener('load', checkMobileDevice);
         window.addEventListener('load', setNavbarStyle);
         window.addEventListener('resize', setNavbarStyle);
+
+        // 页面加载后1秒执行logo分离效果
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const logo = document.getElementById('logo');
+                logo.classList.add('active');
+                
+                // 3秒后恢复原状
+                setTimeout(() => {
+                    logo.classList.remove('active');
+                }, 3000);
+            }, 1000);
+        });
+
+        // 系统检测功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查是否是从本站其他页面导航回来的
+            const referrer = document.referrer;
+            const isSameOrigin = referrer && new URL(referrer).origin === window.location.origin;
+            
+            // 如果是从本站其他页面（如about.html, efr.html）导航回来的，不做检测
+            if (isSameOrigin) {
+                return; // 从站内其他页面导航回来，不执行检测
+            }
+            
+            // 否则执行检测（包括首次访问和刷新页面的情况）
+            setTimeout(function() {
+                const systemCheck = document.getElementById('system-check');
+                
+                // 设置初始状态
+                systemCheck.style.opacity = '0';
+                systemCheck.style.transform = 'translateY(30px)';
+                systemCheck.style.filter = 'blur(2px)';
+                systemCheck.style.display = 'block';
+                
+                // 强制重绘
+                systemCheck.offsetHeight;
+                
+                // 设置过渡
+                systemCheck.style.transition = 'opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease';
+                
+                // 设置最终状态
+                setTimeout(function() {
+                    systemCheck.style.opacity = '1';
+                    systemCheck.style.transform = 'translateY(0)';
+                    systemCheck.style.filter = 'blur(0)';
+                }, 50);
+                
+                runSystemCheck();
+            }, 2000);
+        });
+        
+        function runSystemCheck() {
+            const progressFill = document.getElementById('progress-fill');
+            const progressPercentage = document.getElementById('progress-percentage');
+            const checkStatus = document.getElementById('check-status');
+            const resultDiv = document.getElementById('system-check-result');
+            
+            let progress = 0;
+            let checkSteps = ['检测CPU...', '检测内存...', '检测显卡...', '分析兼容性...'];
+            let currentStep = 0;
+            
+            const interval = setInterval(function() {
+                progress += Math.floor(Math.random() * 5) + 1;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    showResults();
+                }
+                
+                // 更新进度条
+                progressFill.style.width = progress + '%';
+                progressPercentage.innerText = progress + '%';
+                
+                // 更新检测步骤
+                if (progress > currentStep * 25 && currentStep < checkSteps.length) {
+                    checkStatus.innerText = checkSteps[currentStep];
+                    currentStep++;
+                }
+            }, 200);
+            
+            function showResults() {
+                checkStatus.innerText = '检测完成';
+                
+                // 硬件要求检测
+                let hasGoodGPU = false;
+                let hasGoodCPU = false;
+                let hasGoodRAM = false;
+                
+                // GPU检测 - 检查是否至少有RTX 2070或同等性能
+                if (navigator.gpu) {
+                    // WebGPU API 可用，假设现代显卡
+                    hasGoodGPU = true;
+                } else if (window.WebGLRenderingContext) {
+                    // 使用WebGL进行检测
+                    const canvas = document.createElement('canvas');
+                    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                    if (gl) {
+                        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                        if (debugInfo) {
+                            const renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+                            // 检查是否为RTX 2070或更好的显卡
+                            hasGoodGPU = /(rtx\s*(20[7-9]|30|40)|geforce\s*rtx)/i.test(renderer);
+                        }
+                    }
+                }
+                
+                // CPU检测 - 检查是否至少为i5 10代
+                // 注意：浏览器限制了CPU信息访问，这里使用性能特征进行估计
+                const cpuCores = navigator.hardwareConcurrency || 0;
+                if (cpuCores >= 6) {
+                    // 现代CPU通常有6个以上核心
+                    hasGoodCPU = true;
+                } else {
+                    // 使用性能API尝试评估CPU性能
+                    const startTime = performance.now();
+                    let result = 0;
+                    for (let i = 0; i < 10000000; i++) {
+                        result += Math.sqrt(i);
+                    }
+                    const endTime = performance.now();
+                    const executionTime = endTime - startTime;
+                    // 假设执行时间小于X毫秒表示CPU足够快
+                    hasGoodCPU = executionTime < 300;
+                }
+                
+                // 内存检测 - 检查是否至少为16GB
+                // 注意：浏览器只能获取设备内存的近似值
+                hasGoodRAM = true; // 默认设为通过
+                if (navigator.deviceMemory) {
+                    // deviceMemory API返回的是GB为单位的近似值
+                    hasGoodRAM = navigator.deviceMemory >= 8; // API通常报告的值较低
+                }
+                
+                // 所有条件都满足才算通过
+                const isCompatible = hasGoodGPU && hasGoodCPU && hasGoodRAM;
+                
+                // 简化结果显示，只显示通过或不通过
+                resultDiv.style.display = 'block';
+                
+                if (isCompatible) {
+                    resultDiv.innerHTML = `
+                        <div class="result-item" style="justify-content: center;">
+                            <span class="result-pass" style="font-size: 15px;">✓ 兼容性检测通过</span>
+                        </div>
+                    `;
+                    checkStatus.innerText = '检测通过';
+                } else {
+                    // 硬件不符合要求
+                    resultDiv.innerHTML = `
+                        <div class="result-item" style="justify-content: center;">
+                            <span class="result-fail" style="font-size: 15px;">✗ 硬件配置不满足要求</span>
+                        </div>
+                    `;
+                    checkStatus.innerText = '检测未通过';
+                }
+                
+                // 记录结果但不影响下次访问
+                sessionStorage.setItem('efr_system_compatible', isCompatible ? 'true' : 'false');
+                
+                // 3秒后隐藏弹窗
+                setTimeout(function() {
+                    const systemCheck = document.getElementById('system-check');
+                    
+                    // 确保元素存在
+                    if (!systemCheck) return;
+                    
+                    // 使用直接的CSS过渡而不是动画类
+                    systemCheck.style.transition = 'opacity 1.2s ease, transform 1.2s ease, filter 1.2s ease';
+                    systemCheck.style.opacity = '0';
+                    systemCheck.style.transform = 'translateY(30px)';
+                    systemCheck.style.filter = 'blur(2px)';
+                    
+                    // 在过渡完成后隐藏元素
+                    setTimeout(function() {
+                        systemCheck.style.display = 'none';
+                        // 重置样式以便下次显示
+                        systemCheck.style.opacity = '';
+                        systemCheck.style.transform = '';
+                        systemCheck.style.filter = '';
+                    }, 1300);
+                }, 5000);
+            }
+        }
     </script>
 </body>
 </html> 

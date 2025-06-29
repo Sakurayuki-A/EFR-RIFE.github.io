@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://s2.loli.net/2024/12/06/WkojsReL4uNXrb6.png" type="image/png">
-    <link rel="shortcut icon" href="https://s2.loli.net/2024/12/06/WkojsReL4uNXrb6.png" type="image/png">
+    <link rel="icon" href="IMG/icon.jpg" type="image/png">
+    <link rel="shortcut icon" href="IMG/icon.jpg" type="image/png">
     <title>关于我们 - EFR × RIFE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -632,7 +632,7 @@
     <div class="about-container">
         <div class="about-header animate-drop">
             <h1>关于我们</h1>
-            <p>我们是一个充满激情的团队，致力于为用户提供最优质产品</p>
+            <p>致力于为用户提供最优质产品</p>
         </div>
 
         <div class="team-section">
@@ -641,7 +641,7 @@
                     <img src="IMG/1.jpg" alt="团队成员1">
                 </div>
                 <div class="member-info">
-                    <h3>× SakurayuKi</h3>
+                    <h3>× Sakurayuki</h3>
                     <p>Aegis CEO</p>
                 </div>
             </div>
@@ -669,15 +669,15 @@
         </div>
 
         <div class="contact-section animate-drop">
-            <h2>联系我们</h2>
+            <h2>加入我们</h2>
             <div class="contact-info">
                 <div class="contact-item">
                     <i class="fas fa-envelope"></i>
-                    <span>zzero3888@gmail.com</span>
+                    <span>Sakurayuki00008@163.com</span>
                 </div>
                 <div class="contact-item">
                     <i class="fab fa-github"></i>
-                    <span>github.com/Sakurayuki</span>
+                    <a href="https://github.com/Sakurayuki-A" style="color: #ffffff;"><span style="color: #ffffff;">Sakurayuki</span></a>
                 </div>
                 <div class="contact-item">
                     <i class="fab fa-weixin"></i>
@@ -688,7 +688,7 @@
     </div>
 
     <div class="footer animate-drop">
-        <p>© 2024 <span class="team-name">Aegis</span> 团队</p>
+        <p>© 2024-2025 <span class="team-name">Aegis</span> 团队</p>
         <p>保留所有权利</p>
     </div>
 
@@ -697,15 +697,31 @@
         const themeIcon = themeSwitch.querySelector('i');
         const html = document.documentElement;
         
+        // 页面加载时检查本地存储的主题设置
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                html.setAttribute('data-theme', 'dark');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            } else {
+                html.removeAttribute('data-theme');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            }
+        });
+        
         themeSwitch.addEventListener('click', () => {
             if (html.getAttribute('data-theme') === 'dark') {
                 html.removeAttribute('data-theme');
                 themeIcon.classList.remove('fa-moon');
                 themeIcon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'light');
             } else {
                 html.setAttribute('data-theme', 'dark');
                 themeIcon.classList.remove('fa-sun');
                 themeIcon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'dark');
             }
         });
 
